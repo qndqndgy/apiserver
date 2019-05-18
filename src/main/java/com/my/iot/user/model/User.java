@@ -13,14 +13,17 @@ import javax.persistence.Table;
 import com.my.iot.user.connection.UserConnection;
 
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.Setter;
 
 @Entity
 @Table(name = "user")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Getter
+@Getter @Setter
 public class User {
 
     @Id
@@ -33,6 +36,8 @@ public class User {
     @Column(name = "nickname", nullable = false)
     private String nickname;
 
+    
+    // Table Join
     @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "provider_id", referencedColumnName = "provider_id", nullable = false, updatable = false, unique = true)
     private UserConnection social;
@@ -45,14 +50,15 @@ public class User {
     }
 
     public static User signUp(UserConnection userConnection) {
-
         return User.builder()
                 .email(userConnection.getEmail())
                 .nickname(userConnection.getDisplayName())
                 .social(userConnection)
                 .build();
-
     }
 
-
+    @Override
+	public String toString() {
+		return String.format("User [id=%s, email=%s, nickname=%s, social=%s]", id, email, nickname, social);
+	}
 }

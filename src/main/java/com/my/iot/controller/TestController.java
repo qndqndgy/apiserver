@@ -20,7 +20,7 @@ public class TestController {
 	
 	@GetMapping("/destroyAllProcs")
 	public String terminateRunningProcs() {
-		WinProcessUtil.shutdownAllProcessesGracefully();
+		WinProcessUtil.shutdownAllProcsGracefully();
 		return "Success";
 	}
 }

@@ -41,7 +41,8 @@ public class ApiserverApplication implements CommandLineRunner{
 		logger.info("All users -> {}", repository.findAll());
 		
 		// 비즈니스 로직 실행을 위한, 초기화 단계
-		prepareToRunServer();
+		// 불안정해서 로직 제거함..
+//		prepareToRunServer();
 	}
 
 	private void prepareToRunServer(){

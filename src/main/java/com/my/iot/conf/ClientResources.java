@@ -15,7 +15,7 @@ import lombok.Setter;
 @NoArgsConstructor (access = AccessLevel.PUBLIC)
 @Getter (value = AccessLevel.PUBLIC)
 @Setter (value = AccessLevel.PUBLIC)
-class ClientResources {
+public class ClientResources {
 
     @NestedConfigurationProperty
     private AuthorizationCodeResourceDetails client = new AuthorizationCodeResourceDetails();

@@ -11,6 +11,6 @@ public class TerminateBean {
 	
 	@PreDestroy
 	public void onDestroy() throws Exception {
-		WinProcessUtil.shutdownAllProcessesGracefully();
+		WinProcessUtil.shutdownAllProcsGracefully();
 	}
 }

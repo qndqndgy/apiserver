@@ -16,13 +16,15 @@ public class WinProcessUtil {
 	private static List<Process> runningProcs = new ArrayList<Process>();
 
 	public static final void startInfluxDProc() throws IOException, InterruptedException {
-		String[] cmdArray = {"influxd.exe", "--config", "influxdb.conf"};
+//		String[] cmdArray = {"influxd.exe", "--config", "influxdb.conf"};
+		String[] cmdArray = {"influxd.exe"};
 //		executeProcessByCommandArray(cmdArray);
 		executeProcessByCommandArrayAsync(cmdArray);
 	}
 	
 	public static final void startTelegrafDProc() throws IOException, InterruptedException {
 		String[] cmdArray = {"telegraf.exe", "--config", "telegraf.conf"};
+//		String[] cmdArray = {"telegraf.exe"};
 //		executeProcessByCommandArray(cmdArray);
 		executeProcessByCommandArrayAsync(cmdArray);
 	}
@@ -49,7 +51,7 @@ public class WinProcessUtil {
         runningProcs.add(runtime.exec(cmdArray));
 	}
 	
-	public static final void shutdownAllProcessesGracefully() {
+	public static final void shutdownAllProcsGracefully() {
 		// 모든 Process를 종료한다.
 		logger.error("Shutting down all processes reqested.");
 		logger.error(String.format("All (%d) processes will be destroyed. ", runningProcs.size()) );

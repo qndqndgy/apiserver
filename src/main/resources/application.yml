@@ -10,11 +10,12 @@ spring:
     hibernate:
       ddl-auto: create
     show-sql: true
-    format_sql: true
     properties:
       hibernate:
         format_sql: true
         generate_statistics: true
+  main:
+    allow-bean-definition-overriding: true
 
 
 logging:
@@ -39,8 +40,18 @@ google :
     userInfoUri: https://www.googleapis.com/oauth2/v3/userinfo
 
 server:
-  ssl:
-    key-store: keystore.p12
-    key-store-password: cheese
-    keyStoreType: PKCS12
-    keyAlias: tomcat
+  port: 7000
+#  ssl:
+#    key-store: keystore.p12
+#    key-store-password: cheese
+#    keyStoreType: PKCS12
+#    keyAlias: tomcat
+    
+management:
+  endpoint:
+    shutdown:
+      enabled: true
+  metrics:
+    enable:
+      root: true
+      jvm: true

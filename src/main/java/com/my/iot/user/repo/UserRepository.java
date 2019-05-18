@@ -8,6 +8,6 @@ import com.my.iot.user.model.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    User findBySocial(UserConnection userConnection);
+    User findByEmail(String email);
 
 }

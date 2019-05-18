@@ -19,14 +19,15 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User findBySocial(UserConnection userConnection) {
-        final User user = userRepository.findBySocial(userConnection);
+    public User findByEmail(String email) {
+        final User user = userRepository.findByEmail(email);
         if (user == null) throw new RuntimeException();
         return user;
     }
 
-    public boolean existing(UserConnection userConnection) {
-        final User user = userRepository.findBySocial(userConnection);
+    // User 최초 로그인인지 H2 DB 조회한다.
+    public boolean existing(String email) {
+        final User user = userRepository.findByEmail(email);
         return (user != null);
     }
 }

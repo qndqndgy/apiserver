@@ -1,5 +1,7 @@
 package com.my.iot.user.connection;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -9,7 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.my.iot.google.login.model.GoogleLoginModel;
+import com.my.iot.common.security.google.model.GoogleLoginModel;
+import com.my.iot.user.model.User;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -20,9 +23,11 @@ import lombok.NoArgsConstructor;
 @Table(name = "user_connection")
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Getter
-public class UserConnection {
+public class UserConnection implements Serializable{
 
-    @Id
+	private static final long serialVersionUID = 4115676894472264690L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
