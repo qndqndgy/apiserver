@@ -1,5 +1,7 @@
 package com.my.iot;
 
+import java.io.IOException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +9,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.my.iot.common.util.WinProcessUtil;
 import com.my.iot.student.Student;
 import com.my.iot.student.StudentMyBatisRepository;
 
@@ -36,6 +39,26 @@ public class ApiserverApplication implements CommandLineRunner{
 //		repository.deleteById(10002L);
 
 		logger.info("All users -> {}", repository.findAll());
+		
+		// 비즈니스 로직 실행을 위한, 초기화 단계
+		prepareToRunServer();
 	}
 
+	private void prepareToRunServer(){
+		// 서버 실행 준비
+		
+		logger.info("Trying InfluxDB Initialization");
+		try {
+			WinProcessUtil.startInfluxDProc();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		logger.info("Trying Telegraf Agent Initialization");
+		try {
+			WinProcessUtil.startTelegrafDProc();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

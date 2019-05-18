@@ -1,0 +1,46 @@
+spring:
+  h2:
+    console:
+      enabled: true      
+  jackson:
+      serialization:
+        WRITE_DATES_AS_TIMESTAMPS: false
+  jpa:
+    database: h2
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    format_sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        generate_statistics: true
+
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org:
+      hibernate:
+        type: trace
+        stat: debug
+
+google :
+  client :
+    clientId : 320761598589-hstgc6o38sh5t5r8n7m3e8uq9lf9lrmj.apps.googleusercontent.com
+    clientSecret: KXuHm6ckNGIfe35LmIAwdgEV
+    accessTokenUri: https://www.googleapis.com/oauth2/v4/token
+    userAuthorizationUri: https://accounts.google.com/o/oauth2/v2/auth
+    clientAuthenticationScheme: form
+    scope:
+    - email
+    - profile
+  resource:
+    userInfoUri: https://www.googleapis.com/oauth2/v3/userinfo
+
+server:
+  ssl:
+    key-store: keystore.p12
+    key-store-password: cheese
+    keyStoreType: PKCS12
+    keyAlias: tomcat
