@@ -71,7 +71,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         JWTFilter jwtFilter = new JWTFilter();
 
         registrationBean.setFilter(jwtFilter);
-        registrationBean.addUrlPatterns("/api/**");
+        registrationBean.addUrlPatterns("/api/*");
 
         return registrationBean;
     }
