@@ -1,4 +1,4 @@
-package com.my.iot.user.model;
+package com.my.iot.common.security.google.user.model;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,7 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.my.iot.user.connection.UserConnection;
+import com.my.iot.common.security.google.user.connection.UserConnection;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

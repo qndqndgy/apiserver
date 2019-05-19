@@ -3,7 +3,7 @@ package com.my.iot.common.security.google.model;
 
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 
-import com.my.iot.user.connection.UserConnection;
+import com.my.iot.common.security.google.user.connection.UserConnection;
 
 import lombok.AccessLevel;
 import lombok.Getter;

@@ -1,10 +1,15 @@
 package com.my.iot.common.aop.advices;
 
+import java.nio.file.AccessDeniedException;
+
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import com.my.iot.common.exception.MyDeniedException;
+import com.my.iot.common.exception.MyRuntimeException;
 
 @ControllerAdvice
 public class CommonExceptionAdvice {
@@ -17,12 +22,19 @@ public class CommonExceptionAdvice {
     // 비즈니스로직 실행 중 오류가 발생하면 500 Server Internal Error 메시지 등을 전달한다.
     
     @ExceptionHandler(Exception.class)
-    public JSONObject commonException(Exception e) {
+    public JSONObject commonException(Exception e) throws Exception {
         JSONObject jsonObject = new JSONObject();
 
         logger.info(e.toString());
         jsonObject.put("error", e);
+        
+        if(e instanceof AccessDeniedException) {
+        	jsonObject.put("statusCode", 403);
+        	throw new MyDeniedException(e.getMessage(), jsonObject);
+        }else {
+        	jsonObject.put("statusCode", 500);
+        	throw new MyRuntimeException(e.getMessage() , jsonObject);
+        }
 
-        return jsonObject;
     }
 }

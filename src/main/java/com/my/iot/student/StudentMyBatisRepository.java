@@ -8,8 +8,10 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+// Mybatis test 용 클래스
 @Mapper
 public interface StudentMyBatisRepository {
+	
 	@Select("select * from student")
 	public List<Student> findAll();
 

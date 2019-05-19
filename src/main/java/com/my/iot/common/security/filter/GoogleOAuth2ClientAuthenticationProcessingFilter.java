@@ -19,7 +19,7 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 
 import com.my.iot.common.security.google.model.GoogleLoginModel;
 import com.my.iot.common.security.google.service.GoogleLoginService;
-import com.my.iot.user.connection.UserConnection;
+import com.my.iot.common.security.google.user.connection.UserConnection;
 
 public class GoogleOAuth2ClientAuthenticationProcessingFilter extends OAuth2ClientAuthenticationProcessingFilter {
 

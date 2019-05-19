@@ -1,10 +1,10 @@
-package com.my.iot.user.service;
+package com.my.iot.common.security.google.user.service;
 
 import org.springframework.stereotype.Service;
 
-import com.my.iot.user.connection.UserConnection;
-import com.my.iot.user.model.User;
-import com.my.iot.user.repo.UserRepository;
+import com.my.iot.common.security.google.user.connection.UserConnection;
+import com.my.iot.common.security.google.user.model.User;
+import com.my.iot.common.security.google.user.repo.UserRepository;
 
 import lombok.AllArgsConstructor;
 

@@ -1,4 +1,4 @@
-package com.my.iot.user.connection;
+package com.my.iot.common.security.google.user.connection;
 
 import java.io.Serializable;
 
@@ -12,7 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.my.iot.common.security.google.model.GoogleLoginModel;
-import com.my.iot.user.model.User;
+import com.my.iot.common.security.google.user.model.User;
 
 import lombok.AccessLevel;
 import lombok.Builder;

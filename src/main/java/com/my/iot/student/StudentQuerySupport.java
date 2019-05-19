@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
+// JPA QueryDsl Test 용 클래스
 @Repository
 public class StudentQuerySupport extends QuerydslRepositorySupport {
 

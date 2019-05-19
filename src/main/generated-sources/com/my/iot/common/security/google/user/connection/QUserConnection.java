@@ -1,4 +1,4 @@
-package com.my.iot.user.connection;
+package com.my.iot.common.security.google.user.connection;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
@@ -6,9 +6,6 @@ import com.querydsl.core.types.dsl.*;
 
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.Generated;
-
-import com.my.iot.common.security.google.user.connection.ProviderType;
-import com.my.iot.common.security.google.user.connection.UserConnection;
 import com.querydsl.core.types.Path;
 
 
@@ -18,7 +15,7 @@ import com.querydsl.core.types.Path;
 @Generated("com.querydsl.codegen.EntitySerializer")
 public class QUserConnection extends EntityPathBase<UserConnection> {
 
-    private static final long serialVersionUID = 419773579L;
+    private static final long serialVersionUID = -1715280885L;
 
     public static final QUserConnection userConnection = new QUserConnection("userConnection");
 

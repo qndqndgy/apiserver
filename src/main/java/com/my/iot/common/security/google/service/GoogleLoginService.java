@@ -11,9 +11,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import com.my.iot.common.security.google.model.GoogleLoginModel;
-import com.my.iot.user.connection.UserConnection;
-import com.my.iot.user.model.User;
-import com.my.iot.user.service.UserService;
+import com.my.iot.common.security.google.user.connection.UserConnection;
+import com.my.iot.common.security.google.user.model.User;
+import com.my.iot.common.security.google.user.service.UserService;
 
 import lombok.AllArgsConstructor;
 
