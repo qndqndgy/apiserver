@@ -1,7 +1,5 @@
 package com.my.iot;
 
-import java.io.IOException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,14 +11,23 @@ import com.my.iot.common.util.WinProcessUtil;
 import com.my.iot.student.Student;
 import com.my.iot.student.StudentMyBatisRepository;
 
+/**
+ * ApiserverApplication.java
+ * Boot 시작 지점
+ * InfluxDB, Telegraf등을 한꺼번에 올리려고 기능을 추가했었는데, 
+ * 그렇게 올린 InfluxDB 프로세스가 불안정해서 (간헐적인 접속 안됨 현상) 사용 안함.
+ * @author 효민영♥
+ *
+ */
 @SpringBootApplication
 public class ApiserverApplication implements CommandLineRunner{
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	//Test 종료 후 제거 TODO
-	@Autowired
-	StudentMyBatisRepository repository;
+	/*
+	 * @Autowired StudentMyBatisRepository repository;
+	 */
 
 	public static void main(String[] args) {
 		SpringApplication.run(ApiserverApplication.class, args);
@@ -28,24 +35,12 @@ public class ApiserverApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-
-		logger.info("Student id 10001 -> {}", repository.findById(10001L));
-
-		logger.info("Inserting -> {}", repository.insert(new Student(10010L, "John", "A1234657")));
-		logger.info("Inserting -> {}", repository.insert(new Student(10011L, "Brad", "A1234677")));
-		logger.info("Inserting -> {}", repository.insert(new Student(10012L, "Chloe", "A1234688")));
-		logger.info("Inserting -> {}", repository.insert(new Student(10013L, "Lumi", "A1234699")));
-		logger.info("Update 10003 -> {}", repository.update(new Student(10001L, "Name-Updated", "New-Passport")));
-
-//		repository.deleteById(10002L);
-
-		logger.info("All users -> {}", repository.findAll());
 		
 		// 비즈니스 로직 실행을 위한, 초기화 단계
 		// 불안정해서 로직 제거함..
-//		prepareToRunServer();
 	}
 
+	@Deprecated
 	private void prepareToRunServer(){
 		// 서버 실행 준비
 		

@@ -10,6 +10,12 @@ import lombok.Setter;
 @ConfigurationProperties(prefix="influx")
 @AllArgsConstructor
 @Getter @Setter
+/**
+ * InfluxDBConfig.java
+ * 미사용
+ * @author 효민영♥
+ *
+ */
 public class InfluxDBConfig {
     
     public String connectUri;

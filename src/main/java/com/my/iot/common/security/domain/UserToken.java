@@ -12,6 +12,15 @@ import java.util.Map;
 
 @Entity
 @Getter
+/**
+ * UserToken.java
+ * @author 효민영♥
+ * 
+ * JWT 쿠키 생성/검증에 상요되는 클래스.
+ * 직접 구현하지 않고, 참고하여 가져다 사용함.
+ *
+ * 자세한 테스트는 생략
+ */
 public class UserToken {
 
     @Id
@@ -32,7 +41,8 @@ public class UserToken {
         jwtMap.put("typ", "JWT");
     }
 
-    private static final String JWT_SECRET = "yeonbin";
+    //Server전용 secret
+    private static final String JWT_SECRET = "yukinim";
 
     public static UserToken getInstance(String userName, String password) {
         UserToken userToken = new UserToken();

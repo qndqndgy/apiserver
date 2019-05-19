@@ -1,5 +1,7 @@
 package com.my.iot;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.List;
 
 import org.junit.Test;
@@ -11,11 +13,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.my.iot.student.Student;
 import com.my.iot.student.StudentMyBatisRepository;
 import com.my.iot.student.StudentQuerySupport;
-import com.querydsl.core.Tuple;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ApiserverApplicationTests {
+public class ApiserverApplicationTest {
 	
 	@Autowired
 	StudentMyBatisRepository repository;
@@ -25,27 +26,18 @@ public class ApiserverApplicationTests {
 	
 	@Test
 	public void test1() {
-		System.out.println("Hello Test!!");
+		repository.insert(new Student(10002L, "John", "A1234657"));
+		repository.insert(new Student(10011L, "Brad", "A1234677"));
 		List<Student> list = repository.findAll();
-		
-		System.out.println(list.size());
-		
-		Student john = repository.findById(10010L);
-		
-		System.out.println(john.toString());
+		assertEquals(list.size(),2);
 	}
-	
-	
-	
 	
 	@Test
 	public void test2() {
-		System.out.println("Test (2) Start ...");
+		repository.insert(new Student(30L, "John", "A1234657"));
+		repository.insert(new Student(40L, "Brad", "A1234677"));
 		List<Student> list = queryDslRepo.findAll();
-		System.out.println(list.size());
-		for(Student st : list) {
-			System.out.println(st);
-		}
+		assertEquals(list.size(),4);
 	}
 
 }

@@ -32,11 +32,12 @@ public class DashboardService {
 	// Cache가 몇 번이나 Hit되는지 확인해보기 위해 추가함.
 	public static AtomicLong cacheHitCount = new AtomicLong(0);
 	
+	// TC작성 필요
 	public QueryResult getMemoryData() throws MyRuntimeException {
 		
 		long currTimeHash = LocalTime.now().getHour()*10000 + LocalTime.now().getMinute()*100 + LocalTime.now().getSecond();
 		// Ex)
-		// 21시 47분 5초인 경우
+		// 21시 47분 5초인 경우 아래와 같은 규칙으로, 각 시분초마다 유일한 해시값을 만들 수 있다.
 		// 210000 + 4700 + 5 = 214705 
 		
 		if(cache.get(currTimeHash)!=null) {
@@ -46,12 +47,14 @@ public class DashboardService {
 		
 		InfluxDBConnection con;
 		
+		// InfluxDB Connection을 따로 관리해주는 ORM 프레임워크가 없어서, 직접 만들었다.
 		try {
 			con = InfluxDBConnectionFactory.getConnection();
 		} catch (InfluxDBConnectionFullException e) {
 			throw new MyRuntimeException();
 		}
 		
+		// 수집 Data는 telegraf 에이전트가 알아서 넣어줌.
 		InfluxDB db = con.getDb();
 		db.setDatabase("telegraf");
 		
@@ -66,10 +69,12 @@ public class DashboardService {
 		// 역순으로 최신순으로 뽑았기 때문에, 배열을 한번 뒤집어 준다.
 		Collections.reverse(ret.getResults().get(0).getSeries().get(0).getValues());
 		
+		// InfluxDB Connection을 다 썼으면, 아래와 같이 반납해주어야 한다.
 		InfluxDBConnectionFactory.endConnection(con);
 		
 		//cache에 저장
 		synchronized(cache) {
+			// 캐시 저장 시, Thread-Safe 문제 발생할 수 있으므로 안전하게 lock.
 			cache.put(currTimeHash, ret);
 		}
 		

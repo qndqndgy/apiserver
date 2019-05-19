@@ -18,7 +18,6 @@ import lombok.Setter;
  * @author 효민영♥
  *
  */
-
 @Entity
 @Getter @Setter
 @NoArgsConstructor

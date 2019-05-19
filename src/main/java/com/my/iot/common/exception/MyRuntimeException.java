@@ -2,7 +2,17 @@ package com.my.iot.common.exception;
 
 import org.json.simple.JSONObject;
 
+/**
+ * MyRuntimeException.java
+ * @author 효민영♥
+ *
+ */
 public class MyRuntimeException extends Exception {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2501438109093917565L;
 
 	public MyRuntimeException() {
 		super();

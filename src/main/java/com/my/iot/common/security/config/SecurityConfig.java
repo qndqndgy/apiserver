@@ -33,77 +33,86 @@ import lombok.AllArgsConstructor;
 @EnableWebSecurity
 @EnableOAuth2Client
 @AllArgsConstructor
+/**
+ * SecurityConfig.java
+ * @author 효민영♥
+ *
+ */
+// 보안에 관한 설정이 대부분 모여 있음.
+// 일부 Bean정의도 섞여 있음. 
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final OAuth2ClientContext oauth2ClientContext;
-    private final GoogleLoginService service;
-    private final UserTokenService userTokenService;
+	private final OAuth2ClientContext oauth2ClientContext;
+	private final GoogleLoginService service;
+	private final UserTokenService userTokenService;
 
-    // Security를 정의한다.
-    // OAuth 2.0 기반 구글 로그인 방식을 정의한다.
-    
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        // @formatter:off
+	// Security를 정의한다.
+	// OAuth 2.0 기반 구글 로그인 방식을 정의한다.
 
-        http.csrf().disable();
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		
+		//Cross-site Request forgery disable
+		http.csrf().disable();
 
-        // 이 부분은, 분석 필요
-        // MY TODO
-		http.antMatcher("/**").authorizeRequests().antMatchers("/", "/login**").permitAll().anyRequest().authenticated()
-				.and().exceptionHandling().authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/")).and()
+		// 대시보드 Page, Admin 기능 확인할 때 활용됨.
+		// google Oauth 2.0 필터 맵핑 등록
+		http.authorizeRequests().antMatchers("/", "/login/google").permitAll().anyRequest()
+				.authenticated().and().exceptionHandling()
+				.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/")).and()
 				.addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class);
 
 		http.logout().invalidateHttpSession(true).clearAuthentication(true)
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/").permitAll();
 
-    }
-    
-    @Bean
-    public FilterRegistrationBean<JWTFilter> tokenFilter() {
-        FilterRegistrationBean<JWTFilter> registrationBean = new FilterRegistrationBean<>();
-        JWTFilter jwtFilter = new JWTFilter();
-        jwtFilter.setUserTokenService(userTokenService);
+	}
 
-        registrationBean.setFilter(jwtFilter);
-        registrationBean.addUrlPatterns("/api/*");
+	// JWT 필터 빈 정의
+	@Bean
+	public FilterRegistrationBean<JWTFilter> tokenFilter() {
+		FilterRegistrationBean<JWTFilter> registrationBean = new FilterRegistrationBean<>();
+		JWTFilter jwtFilter = new JWTFilter();
+		jwtFilter.setUserTokenService(userTokenService);
 
-        return registrationBean;
-    }
-    
-    @Bean
-    public FilterRegistrationBean<Filter> oauth2ClientFilterRegistration(OAuth2ClientContextFilter filter) {
-    	// Filter Bean 정의
-        FilterRegistrationBean<Filter> registration = new FilterRegistrationBean<>();
-        registration.setFilter(filter);
-        registration.setOrder(-100);
-        return registration;
-    }
+		// rest api 인증에 JWT토큰 인증 사용됨.
+		registrationBean.setFilter(jwtFilter);
+		registrationBean.addUrlPatterns("/api/*");
 
-    // 구글 설정
-    @Bean
-    @ConfigurationProperties("google")
-    public ClientResources google() {
-        return new ClientResources();
-    }
-    
-    // GoogleOAuth2ClientAuthenticationProcessingFilter 초기화
-    private Filter ssoFilter() {
-        CompositeFilter filter = new CompositeFilter();
-        List<Filter> filters = new ArrayList<>();
-        //Filters의 의미는 무엇인지?
-        // MY TODO
-        filters.add(ssoFilter(google(), new GoogleOAuth2ClientAuthenticationProcessingFilter(service)));
-        filter.setFilters(filters);
-        return filter;
-    }
+		return registrationBean;
+	}
 
-    private Filter ssoFilter(ClientResources client, OAuth2ClientAuthenticationProcessingFilter filter) {
-        OAuth2RestTemplate restTemplate = new OAuth2RestTemplate(client.getClient(), oauth2ClientContext);
-        filter.setRestTemplate(restTemplate);
-        UserInfoTokenServices tokenServices = new UserInfoTokenServices(client.getResource().getUserInfoUri(), client.getClient().getClientId());
-        filter.setTokenServices(tokenServices);
-        tokenServices.setRestTemplate(restTemplate);
-        return filter;
-    }
+	@Bean
+	public FilterRegistrationBean<Filter> oauth2ClientFilterRegistration(OAuth2ClientContextFilter filter) {
+		// OAuth2ClientContextFilter 등록
+		FilterRegistrationBean<Filter> registration = new FilterRegistrationBean<>();
+		registration.setFilter(filter);
+		registration.setOrder(-100);
+		return registration;
+	}
+
+	// 구글 리소스 전용 빈
+	@Bean
+	@ConfigurationProperties("google")
+	public ClientResources google() {
+		return new ClientResources();
+	}
+
+	// GoogleOAuth2ClientAuthenticationProcessingFilter 초기화
+	private Filter ssoFilter() {
+		CompositeFilter filter = new CompositeFilter();
+		List<Filter> filters = new ArrayList<>();
+		filters.add(ssoFilter(google(), new GoogleOAuth2ClientAuthenticationProcessingFilter(service)));
+		filter.setFilters(filters);
+		return filter;
+	}
+
+	private Filter ssoFilter(ClientResources client, OAuth2ClientAuthenticationProcessingFilter filter) {
+		OAuth2RestTemplate restTemplate = new OAuth2RestTemplate(client.getClient(), oauth2ClientContext);
+		filter.setRestTemplate(restTemplate);
+		UserInfoTokenServices tokenServices = new UserInfoTokenServices(client.getResource().getUserInfoUri(),
+				client.getClient().getClientId());
+		filter.setTokenServices(tokenServices);
+		tokenServices.setRestTemplate(restTemplate);
+		return filter;
+	}
 }

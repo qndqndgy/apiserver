@@ -19,6 +19,11 @@ import lombok.AllArgsConstructor;
 
 @Component
 @AllArgsConstructor
+/**
+ * GoogleLoginService.java
+ * @author 효민영♥
+ *
+ */
 public class GoogleLoginService {
 
     private final UserService service;

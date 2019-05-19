@@ -2,7 +2,17 @@ package com.my.iot.common.exception;
 
 import org.json.simple.JSONObject;
 
+/**
+ * MyDeniedException.java
+ * @author 효민영♥
+ *
+ */
 public class MyDeniedException extends Exception {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 9155774599005504081L;
 
 	public MyDeniedException() {
 		super();

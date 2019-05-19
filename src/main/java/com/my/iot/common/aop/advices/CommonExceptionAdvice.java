@@ -11,6 +11,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import com.my.iot.common.exception.MyDeniedException;
 import com.my.iot.common.exception.MyRuntimeException;
 
+/**
+ * CommonExceptionAdvice.java
+ * 
+ * @author 효민영♥
+ *
+ */
 @ControllerAdvice
 public class CommonExceptionAdvice {
     Logger logger = LoggerFactory.getLogger(CommonExceptionAdvice.class);
@@ -21,12 +27,13 @@ public class CommonExceptionAdvice {
     // 예를 들면, 권한체크 Fail인 경우 Not Authorized response를 리턴하고,
     // 비즈니스로직 실행 중 오류가 발생하면 500 Server Internal Error 메시지 등을 전달한다.
     
-    @ExceptionHandler(Exception.class)
+    @SuppressWarnings("unchecked")
+	@ExceptionHandler(Exception.class)
     public JSONObject commonException(Exception e) throws Exception {
         JSONObject jsonObject = new JSONObject();
 
         logger.info(e.toString());
-        jsonObject.put("error", e);
+        jsonObject.put("error", e.getMessage());
         
         if(e instanceof AccessDeniedException) {
         	jsonObject.put("statusCode", 403);

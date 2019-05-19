@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.influxdb.BatchOptions;
 import org.influxdb.InfluxDB;
-import org.influxdb.InfluxDBFactory;
 import org.influxdb.dto.Query;
 import org.influxdb.dto.QueryResult;
 
@@ -16,6 +15,7 @@ import com.my.iot.common.influxdb.connection.InfluxDBConnection;
 import com.my.iot.common.influxdb.connection.InfluxDBConnectionFactory;
 
 /**
+ * InfluxDBTest.java
  * InfluxDB의 DB Connection을 관리해주는 클래스.
  * 여유가 되면, 캐시 적용과 Connection Pool 적용 등의 추가가 필요하다.
  * 현재 인기있는 ORM Framework에서는 InfluxDB를 지원하지 않는 듯 하여, 직접 커넥션을 맺고 관리해야 함.
@@ -23,6 +23,8 @@ import com.my.iot.common.influxdb.connection.InfluxDBConnectionFactory;
  *
  */
 public class InfluxDBTest {
+	
+	// Test용 쿼리.
 	public static List<Float> myTest() throws MyRuntimeException {
 		InfluxDBConnection con;
 		
@@ -55,6 +57,7 @@ public class InfluxDBTest {
 		return data;
 	}
 	
+	// DashboardService쪽과 로직이 같음. (초기 테스트용으로 사용한 버전.)
 	public static QueryResult myTest2() throws MyRuntimeException {
 		
 		InfluxDBConnection con;

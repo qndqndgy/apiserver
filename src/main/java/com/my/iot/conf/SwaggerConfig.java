@@ -9,7 +9,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
- * Swagger활용하여, Api문서화 할 일이 있을 것 같아 일단 추가함.
+ * Swagger 코드기반 Api 문서화.
  * @author 효민영♥
  *
  */
@@ -17,6 +17,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class SwaggerConfig {
 
+	//Swagger 메뉴얼 접속 주소 : https://localhost:7443/swagger-ui.html
+	// /login/google 에서 Google 로그인 먼저 해야 함.
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)

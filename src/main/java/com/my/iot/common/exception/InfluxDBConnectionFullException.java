@@ -2,7 +2,17 @@ package com.my.iot.common.exception;
 
 import org.json.simple.JSONObject;
 
+/**InfluxDBConnectionFullException.java
+ * 
+ * @author 효민영♥
+ *
+ */
 public class InfluxDBConnectionFullException extends Exception {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -39387173860354773L;
 
 	public InfluxDBConnectionFullException() {
 		super();

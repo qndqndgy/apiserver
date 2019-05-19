@@ -12,7 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.my.iot.common.security.google.model.GoogleLoginModel;
-import com.my.iot.common.security.google.user.model.User;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -23,6 +22,11 @@ import lombok.NoArgsConstructor;
 @Table(name = "user_connection")
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Getter
+/**
+ * UserConnection.java
+ * @author 효민영♥
+ *
+ */
 public class UserConnection implements Serializable{
 
 	private static final long serialVersionUID = 4115676894472264690L;

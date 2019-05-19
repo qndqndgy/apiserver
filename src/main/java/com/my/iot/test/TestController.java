@@ -11,6 +11,12 @@ import com.my.iot.common.util.WinProcessUtil;
 
 import lombok.AllArgsConstructor;
 
+/**
+ * TestController.java
+ * 테스트용으로 임시로 사용했던 클래스
+ * @author 효민영♥
+ *
+ */
 @RestController
 @AllArgsConstructor
 @RequestMapping("/test")

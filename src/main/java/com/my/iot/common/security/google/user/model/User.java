@@ -13,17 +13,21 @@ import javax.persistence.Table;
 import com.my.iot.common.security.google.user.connection.UserConnection;
 
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import lombok.Setter;
 
 @Entity
 @Table(name = "user")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter @Setter
+/**
+ * User.java
+ * @author 효민영♥
+ *
+ * Google Oauth 2.0 인증에 사용함.
+ */
 public class User {
 
     @Id

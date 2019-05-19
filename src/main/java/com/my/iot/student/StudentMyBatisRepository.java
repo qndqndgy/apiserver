@@ -8,6 +8,11 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+/**
+ * StudentMyBatisRepository.java
+ * @author 효민영♥
+ *
+ */
 // Mybatis test 용 클래스
 // Pure한 SQL을 쓰고싶을 땐, Mybatis로 활용하기 위해 일단 테스트 함.
 @Mapper

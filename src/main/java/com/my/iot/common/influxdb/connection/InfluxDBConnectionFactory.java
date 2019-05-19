@@ -3,11 +3,13 @@ package com.my.iot.common.influxdb.connection;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.my.iot.common.exception.InfluxDBConnectionFullException;
-import com.my.iot.common.influxdb.config.InfluxDBConfig;
 
+/**
+ * InfluxDBConnectionFactory.java
+ * @author 효민영♥
+ *
+ */
 public class InfluxDBConnectionFactory {
 	private static final int connectionMaxNum = 10;
 	

@@ -10,6 +10,11 @@ import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
+/**
+ * UserService.java
+ * @author 효민영♥
+ *
+ */
 public class UserService {
 
     private final UserRepository userRepository;
