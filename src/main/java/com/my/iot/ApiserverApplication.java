@@ -18,6 +18,7 @@ public class ApiserverApplication implements CommandLineRunner{
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
+	//Test 종료 후 제거 TODO
 	@Autowired
 	StudentMyBatisRepository repository;
 

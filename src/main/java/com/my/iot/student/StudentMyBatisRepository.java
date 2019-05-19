@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 // Mybatis test 용 클래스
+// Pure한 SQL을 쓰고싶을 땐, Mybatis로 활용하기 위해 일단 테스트 함.
 @Mapper
 public interface StudentMyBatisRepository {
 	

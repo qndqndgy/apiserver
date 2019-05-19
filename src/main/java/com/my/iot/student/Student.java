@@ -12,11 +12,19 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
 
+
+/**
+ * 테스트용 Student JPA 엔티티
+ * @author 효민영♥
+ *
+ */
+
 @Entity
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Student {
+	
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

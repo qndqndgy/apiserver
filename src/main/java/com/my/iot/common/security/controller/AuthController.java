@@ -21,7 +21,7 @@ public class AuthController {
 
     UserTokenService userTokenService;
 
-    @PostMapping("/signUp")
+    @PostMapping("/register")
     public JSONObject registerUserInfo(@RequestBody UserSignInInfo userSignInInfo) {
         return userTokenService.registerUser(userSignInInfo.getUsername(),
                 userSignInInfo.getPassword());
