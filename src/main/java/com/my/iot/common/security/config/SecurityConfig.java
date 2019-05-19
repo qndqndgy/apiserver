@@ -9,7 +9,6 @@ import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoT
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -20,13 +19,13 @@ import org.springframework.security.oauth2.client.filter.OAuth2ClientContextFilt
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.filter.CompositeFilter;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.my.iot.common.security.filter.GoogleOAuth2ClientAuthenticationProcessingFilter;
 import com.my.iot.common.security.filter.JWTFilter;
 import com.my.iot.common.security.google.service.GoogleLoginService;
+import com.my.iot.common.security.service.UserTokenService;
 import com.my.iot.conf.ClientResources;
 
 import lombok.AllArgsConstructor;
@@ -38,6 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final OAuth2ClientContext oauth2ClientContext;
     private final GoogleLoginService service;
+    private final UserTokenService userTokenService;
 
     // Security를 정의한다.
     // OAuth 2.0 기반 구글 로그인 방식을 정의한다.
@@ -50,18 +50,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         // 이 부분은, 분석 필요
         // MY TODO
-		/*
-		 * http.antMatcher("/**").authorizeRequests().antMatchers("/",
-		 * "/login**").permitAll().anyRequest()
-		 * .authenticated().and().exceptionHandling() .authenticationEntryPoint(new
-		 * LoginUrlAuthenticationEntryPoint("/")).and() .addFilterBefore(ssoFilter(),
-		 * BasicAuthenticationFilter.class);
-		 * 
-		 * http.logout() .invalidateHttpSession(true) .clearAuthentication(true)
-		 * .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-		 * .logoutSuccessUrl("/") .permitAll();
-		 */
-        
+		http.antMatcher("/**").authorizeRequests().antMatchers("/", "/login**").permitAll().anyRequest().authenticated()
+				.and().exceptionHandling().authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/")).and()
+				.addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class);
+
+		http.logout().invalidateHttpSession(true).clearAuthentication(true)
+				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/").permitAll();
 
     }
     
@@ -69,6 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public FilterRegistrationBean<JWTFilter> tokenFilter() {
         FilterRegistrationBean<JWTFilter> registrationBean = new FilterRegistrationBean<>();
         JWTFilter jwtFilter = new JWTFilter();
+        jwtFilter.setUserTokenService(userTokenService);
 
         registrationBean.setFilter(jwtFilter);
         registrationBean.addUrlPatterns("/api/*");

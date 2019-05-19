@@ -24,7 +24,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class JWTFilter implements Filter {
 
-	@Autowired
     private UserTokenService userTokenService;
 
     @Override
@@ -38,7 +37,7 @@ public class JWTFilter implements Filter {
         String header = req.getHeader("Authorization");
 
         try {
-            if(!userTokenService.validateToken(header)) {
+            if(header==null || !userTokenService.validateToken(header)) {
                 AuthenticationException errorResponse = new AuthenticationException("Authentication Failed");
                 response.getWriter().write(convertObjectToJson(errorResponse));
             }
