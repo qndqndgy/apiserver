@@ -1,4 +1,4 @@
-#### MY Api Server (#Part 1)
+# MY Api Server (#Part 1)
 ----
 
 Springboot, H2DB, JPA, Mybatis, Lombok 등의 Framework을 갖는 Rest Api 서버입니다.
