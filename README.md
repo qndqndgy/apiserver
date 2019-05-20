@@ -96,7 +96,7 @@ Run Java Program : ApiserverApplication.java
 https://localhost:7443/
 ```
 
-## Googld 계정 Oauth 2.0 로그인
+## Google 계정 Oauth 2.0 로그인
 ```
 로그인 이 후 https://localhost:7443/ 페이지 방문하면 index.html 확인 가능.
 ```
