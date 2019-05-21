@@ -21,7 +21,7 @@ public class InfluxDBConnectionFactory {
 	
 	private static final List<InfluxDBConnection> connectionPool = new ArrayList<InfluxDBConnection>(); 
 	
-	public static final InfluxDBConnection getConnection() throws InfluxDBConnectionFullException {
+	public static final synchronized InfluxDBConnection getConnection() throws InfluxDBConnectionFullException {
 		for(InfluxDBConnection con : connectionPool)
 			if(con.isIdle()) return con.consume();
 		
@@ -30,12 +30,10 @@ public class InfluxDBConnectionFactory {
 		
 		if(connectionMaxNum <= connectionPool.size()) throw new InfluxDBConnectionFullException(); 
 		
-		synchronized (connectionPool) {
-			// connectionPool은, Thread-safe 시키기 위해 동기화 시킨다.
-			InfluxDBConnection newConnection = new InfluxDBConnection(connectUri, username, password);
-			connectionPool.add(newConnection);
-			return newConnection.consume();
-		}
+		// connectionPool은, Thread-safe 시키기 위해 동기화 시킨다.
+		InfluxDBConnection newConnection = new InfluxDBConnection(connectUri, username, password);
+		connectionPool.add(newConnection);
+		return newConnection.consume();
 	}
 	
 	//getConnection 이후에, 반드시 호출해줘야 하는 메서드

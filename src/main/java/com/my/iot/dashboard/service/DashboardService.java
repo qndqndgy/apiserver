@@ -45,37 +45,36 @@ public class DashboardService {
 			return cache.get(currTimeHash);
 		}
 		
-		InfluxDBConnection con;
+		InfluxDBConnection con = null;
+		QueryResult ret = null;
 		
 		// InfluxDB Connection을 따로 관리해주는 ORM 프레임워크가 없어서, 직접 만들었다.
 		try {
 			con = InfluxDBConnectionFactory.getConnection();
+			// 수집 Data는 telegraf 에이전트가 알아서 넣어줌.
+			InfluxDB db = con.getDb();
+			db.setDatabase("telegraf");
+			
+			StringBuilder queryBuild = new StringBuilder().append("SELECT Available_Bytes ")
+															.append("FROM win_mem ")
+															.append("ORDER BY time DESC ")
+															.append("LIMIT 100");
+			
+			Query query = new Query(queryBuild.toString(), "telegraf");
+			if(!db.isBatchEnabled()) db.enableBatch(BatchOptions.DEFAULTS);
+			ret = db.query(query);
+			// 역순으로 최신순으로 뽑았기 때문에, 배열을 한번 뒤집어 준다.
+			Collections.reverse(ret.getResults().get(0).getSeries().get(0).getValues());
+			//cache에 저장
+			synchronized(cache) {
+				// 캐시 저장 시, Thread-Safe 문제 발생할 수 있으므로 안전하게 lock.
+				cache.put(currTimeHash, ret);
+			}
 		} catch (InfluxDBConnectionFullException e) {
 			throw new MyRuntimeException();
-		}
-		
-		// 수집 Data는 telegraf 에이전트가 알아서 넣어줌.
-		InfluxDB db = con.getDb();
-		db.setDatabase("telegraf");
-		
-		StringBuilder queryBuild = new StringBuilder().append("SELECT Available_Bytes ")
-														.append("FROM win_mem ")
-														.append("ORDER BY time DESC ")
-														.append("LIMIT 100");
-		
-		Query query = new Query(queryBuild.toString(), "telegraf");
-		if(!db.isBatchEnabled()) db.enableBatch(BatchOptions.DEFAULTS);
-		QueryResult ret = db.query(query);
-		// 역순으로 최신순으로 뽑았기 때문에, 배열을 한번 뒤집어 준다.
-		Collections.reverse(ret.getResults().get(0).getSeries().get(0).getValues());
-		
-		// InfluxDB Connection을 다 썼으면, 아래와 같이 반납해주어야 한다.
-		InfluxDBConnectionFactory.endConnection(con);
-		
-		//cache에 저장
-		synchronized(cache) {
-			// 캐시 저장 시, Thread-Safe 문제 발생할 수 있으므로 안전하게 lock.
-			cache.put(currTimeHash, ret);
+		} finally {
+			// InfluxDB Connection을 다 썼으면, 아래와 같이 반납해주어야 한다.
+			InfluxDBConnectionFactory.endConnection(con);
 		}
 		
 		return ret;
