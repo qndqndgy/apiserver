@@ -59,25 +59,22 @@ public class InfluxDBTest {
 	
 	// DashboardService쪽과 로직이 같음. (초기 테스트용으로 사용한 버전.)
 	public static QueryResult myTest2() throws MyRuntimeException {
-		
-		InfluxDBConnection con;
-		
+		InfluxDBConnection con = null;
 		try {
 			con = InfluxDBConnectionFactory.getConnection();
+			InfluxDB db = con.getDb();
+			db.setDatabase("telegraf");
+			Query query = new Query("SELECT Available_Bytes FROM win_mem ORDER BY time desc limit 50", "telegraf");
+			if(!db.isBatchEnabled()) db.enableBatch(BatchOptions.DEFAULTS);
+			QueryResult ret = db.query(query);
+			// 역순으로 최신순으로 뽑았기 때문에, 배열을 한번 뒤집어 준다.
+			Collections.reverse(ret.getResults().get(0).getSeries().get(0).getValues());
+			return ret;
 		} catch (InfluxDBConnectionFullException e) {
 			throw new MyRuntimeException();
+		} finally {
+			InfluxDBConnectionFactory.endConnection(con);
 		}
-		
-		InfluxDB db = con.getDb();
-		db.setDatabase("telegraf");
-		Query query = new Query("SELECT Available_Bytes FROM win_mem ORDER BY time desc limit 50", "telegraf");
-		if(!db.isBatchEnabled()) db.enableBatch(BatchOptions.DEFAULTS);
-		QueryResult ret = db.query(query);
-		// 역순으로 최신순으로 뽑았기 때문에, 배열을 한번 뒤집어 준다.
-		Collections.reverse(ret.getResults().get(0).getSeries().get(0).getValues());
-		
-		InfluxDBConnectionFactory.endConnection(con);
-		return ret;
 	}
 	
 }
