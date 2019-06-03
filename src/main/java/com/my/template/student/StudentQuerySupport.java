@@ -14,7 +14,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
  *
  */
 // JPA QueryDsl Test 용 클래스
-// QueryDsl 역시 가독성이 그리 좋지 않아, 아무래도 간단한 JPA + Mybatis 조합이 나에게 맞는 듯 함.
+// QueryDsl 역시 가독성이 그리 좋지 않은듯 함.
 @Repository
 public class StudentQuerySupport extends QuerydslRepositorySupport {
 
