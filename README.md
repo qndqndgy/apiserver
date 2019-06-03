@@ -1,7 +1,9 @@
-# MY Api Server (#Part 1)
+# MY Api Server 
 ----
 
-Springboot, H2DB, JPA, Mybatis, Lombok 등의 Framework을 갖는 Rest Api 서버입니다.
+Springboot, H2DB, JPA, Mybatis, Lombok 등의 Framework을 갖는 Rest Api 서버입니다. 
+향후에도 비슷한 미니프로젝트를 진행할 경우에, Template으로 사용하기 위해 개발했습니다.
+주말을 활용해 약 3일정도 (2019.05) 초안을 개발했으며, 계속 Develop 시켜 나갈 예정입니다.
 OAuth 2.0 기반 Google 로그인 연동, JWT 쿠키 기반 Rest API 서비스가 주요 기능이며, Vue로 제작된 간단한 Chart 페이지도 구현되어 있습니다.
 
 API로 제공하는 기능은, 
