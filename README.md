@@ -1,6 +1,8 @@
 # MY Api Server 
 ----
 
+https://github.com/qndqndgy/apiserver.git
+
 Springboot, H2DB, JPA, Mybatis, Lombok 등의 Framework을 갖는 Rest Api 서버입니다. 
 향후에도 비슷한 미니프로젝트를 진행할 경우에, Template으로 사용하기 위해 개발했습니다.
 주말을 활용해 약 3일정도 (2019.05) 초안을 개발했으며, 계속 Develop 시켜 나갈 예정입니다.
